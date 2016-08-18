@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head></head>
+<body>
+<script type='text/x-template'>
+  hey there ${name} ${age}
+</script>
+<script>
+
+function template(tpl, context){
+  const o = {}
+  tpl = tpl.replace(/\${([^${]+)}/g,"${o.$1}" )
+  for(var k in context)
+    o[k] = context[k]
+  try {
+    return eval("`" +tpl+"`")
+  } catch (e){
+    console.error(e.stack)
+  }
+}
+let tpls = document.querySelectorAll("[type='text/x-template']")
+
+var out = template(tpls[0].innerHTML, {name: 'jesse', aage: 27})
+
+console.log(out)
+</script>
+</body>
+</html>
